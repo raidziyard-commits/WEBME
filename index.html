@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="WEBME builds modern, user-friendly websites and web experiences for growing businesses.">
+  <title>WEBME | Creative Web Development Company</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="#home">WEBME</a>
+      <nav class="site-nav">
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#feedback">Feedback</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="hero section">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Creative. Reliable. User-Friendly.</p>
+          <h1>Build your online success with <span>WEBME</span></h1>
+          <p>
+            We craft beautiful websites that help businesses grow, connect with customers,
+            and leave a lasting impression.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#contact">Contact Us</a>
+            <a class="btn btn-secondary" href="#feedback">Give Feedback</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <h2>Why choose WEBME?</h2>
+          <ul>
+            <li>Modern design that stands out</li>
+            <li>Fast, responsive, mobile-first websites</li>
+            <li>Simple user experiences that convert</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="container">
+        <h2 class="section-title">Our Services</h2>
+        <div class="cards">
+          <article class="card">
+            <h3>Business Websites</h3>
+            <p>Professional websites that build trust and generate new leads.</p>
+          </article>
+          <article class="card">
+            <h3>UI/UX Design</h3>
+            <p>Clean and attractive interfaces focused on user behavior and comfort.</p>
+          </article>
+          <article class="card">
+            <h3>Website Optimization</h3>
+            <p>Speed, responsiveness, and better user journey for stronger performance.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section intro" id="about">
+      <div class="container intro-grid">
+        <div class="intro-image" role="img" aria-label="Creative web development concept illustration"></div>
+        <div class="intro-copy">
+          <h2 class="section-title">Meet RAID ZIYARD</h2>
+          <p>
+            Hi, I am <strong>RAID ZIYARD</strong>, founder of <strong>WEBME</strong>. I help businesses and personal brands
+            present themselves online with confidence through modern, attractive, and user-friendly websites.
+          </p>
+          <p>
+            My goal is simple: create web experiences that look great, feel smooth, and make your customers want to stay,
+            trust, and connect with your business.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <h2 class="section-title">Contact WEBME</h2>
+        <form id="contactForm" class="form-card" novalidate>
+          <div class="field-row">
+            <div>
+              <label for="contactName">Your Name</label>
+              <input id="contactName" name="name" type="text" placeholder="Enter your name" required>
+            </div>
+            <div>
+              <label for="contactEmail">Email</label>
+              <input id="contactEmail" name="email" type="email" placeholder="Enter your email" required>
+            </div>
+          </div>
+          <div>
+            <label for="contactMessage">Message</label>
+            <textarea id="contactMessage" name="message" rows="4" placeholder="Tell us what you need" required></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit">Send Message</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="section" id="feedback">
+      <div class="container">
+        <h2 class="section-title">Customer Feedback</h2>
+        <form id="feedbackForm" class="form-card" novalidate>
+          <input id="feedbackId" type="hidden">
+          <div class="field-row">
+            <div>
+              <label for="feedbackName">Your Name</label>
+              <input id="feedbackName" type="text" placeholder="Enter your name" required>
+            </div>
+            <div>
+              <label for="feedbackRating">Rating (1-5)</label>
+              <input id="feedbackRating" type="number" min="1" max="5" placeholder="5" required>
+            </div>
+          </div>
+          <div>
+            <label for="feedbackText">Feedback</label>
+            <textarea id="feedbackText" rows="4" placeholder="Share your experience with WEBME" required></textarea>
+          </div>
+          <div class="form-actions">
+            <button id="saveFeedbackBtn" class="btn btn-primary" type="submit">Save Feedback</button>
+            <button id="resetFeedbackBtn" class="btn btn-secondary" type="button">Clear</button>
+          </div>
+        </form>
+        <div id="feedbackList" class="cards cards-feedback"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>WEBME by RAID ZIYARD | Building creative websites with purpose.</p>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
