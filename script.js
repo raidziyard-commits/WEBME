@@ -1,6 +1,8 @@
 const FEEDBACK_STORAGE_KEY = "webme_feedback_v1";
+const FORMSUBMIT_URL = "https://formsubmit.co/ajax/raidziyard@gmail.com";
 
 const contactForm = document.getElementById("contactForm");
+const contactSubmitBtn = document.getElementById("contactSubmitBtn");
 const feedbackForm = document.getElementById("feedbackForm");
 const feedbackList = document.getElementById("feedbackList");
 const toast = document.getElementById("toast");
@@ -85,13 +87,13 @@ function validateContactForm() {
 
   if (!name || !email || !message) {
     showToast("Please fill all contact fields.", true);
-    return false;
+    return null;
   }
   if (!validateEmail(email)) {
     showToast("Please enter a valid email address.", true);
-    return false;
+    return null;
   }
-  return true;
+  return { name, email, message };
 }
 
 function validateFeedbackForm() {
@@ -110,17 +112,60 @@ function validateFeedbackForm() {
   return { name, text, rating };
 }
 
-contactForm.addEventListener("submit", (event) => {
+async function sendToFormsubmit(payload) {
+  const response = await fetch(FORMSUBMIT_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify(payload)
+  });
+  return response.ok;
+}
+
+contactForm.addEventListener("submit", async (event) => {
   event.preventDefault();
-  if (!validateContactForm()) return;
-  contactForm.reset();
-  showToast("Message sent successfully. WEBME will contact you soon.");
+  const validData = validateContactForm();
+  if (!validData) return;
+
+  const fd = new FormData(contactForm);
+  const honey = String(fd.get("_honey") || "").trim();
+  if (honey) return;
+
+  const payload = {
+    name: validData.name,
+    email: validData.email,
+    message: validData.message,
+    _subject: "New WEBME contact message",
+    _template: "table",
+    _honey: ""
+  };
+
+  if (contactSubmitBtn) contactSubmitBtn.disabled = true;
+  try {
+    const ok = await sendToFormsubmit(payload);
+    if (ok) {
+      contactForm.reset();
+      showToast("Message sent successfully. WEBME will contact you soon.");
+    } else {
+      showToast("Could not send right now. Please try WhatsApp.", true);
+    }
+  } catch {
+    showToast("Could not send right now. Please try WhatsApp.", true);
+  } finally {
+    if (contactSubmitBtn) contactSubmitBtn.disabled = false;
+  }
 });
 
-feedbackForm.addEventListener("submit", (event) => {
+feedbackForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   const validData = validateFeedbackForm();
   if (!validData) return;
+
+  const fd = new FormData(feedbackForm);
+  const honey = String(fd.get("_honey") || "").trim();
+  if (honey) return;
 
   const feedbacks = readFeedbacks();
   const editingId = feedbackId.value;
@@ -143,6 +188,22 @@ feedbackForm.addEventListener("submit", (event) => {
   saveFeedbacks(feedbacks);
   resetFeedbackForm();
   renderFeedbacks();
+
+  if (!editingId) {
+    const emailPayload = {
+      feedback_name: validData.name,
+      rating: validData.rating,
+      feedback: validData.text,
+      _subject: "New WEBME customer feedback",
+      _template: "table",
+      _honey: ""
+    };
+    try {
+      await sendToFormsubmit(emailPayload);
+    } catch {
+      /* email failure must not block local save */
+    }
+  }
 });
 
 resetFeedbackBtn.addEventListener("click", () => {
